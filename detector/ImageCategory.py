@@ -70,13 +70,15 @@ class ImageClassifier():
 
 		probability_response = zip(labels[output_prob.argsort()[::-1][:5]])
 
-		for values in probability_response:
-			for i in values:
-				temp = i.split(' ')
-				output[temp[0]] = ' '.join(temp[1:])
+		top_inds = output_prob.argsort()[::-1][:15]
 
+		lista = zip(output_prob[top_inds], labels[top_inds])
+	
 		output.pop('prob')
+		for probability,values in lista:
+			temp = values.split(' ')
+			output[temp[0]] = list()
+			output[temp[0]].append(' '.join(temp[1:]))
+			output[temp[0]].append(str(probability))
 
-		print output
-		print probability_response
 		return output

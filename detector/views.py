@@ -47,17 +47,17 @@ class FaceDetect(View):
 		output['num_faces']=len(rects)
 		output['faces'] = rects
 		output['sucess'] = True
+		 
 		output['probability_response'] = ImageClassifier.image_from_url(url)
-
-
-
+		
+		
 		for key,value in output['probability_response'].items():
-			if(len(Classification.objects.filter(number_id=key)) == 0):
-				
+			if(len(Classification.objects.filter(number_id=key,percentage=value[1])) == 0):
 				classification = Classification()
 				
 				classification.number_id = key
-				classification.classification = value
+				classification.classification = value[0]
+				classification.percentage = value[1]
 
 				classification.save()
 
@@ -72,15 +72,12 @@ class FaceDetect(View):
 			image.url = request.POST['url']
 			image.save()
 
-			for key in output['probability_response'].keys():
+			for key,value in output['probability_response'].items():
 				
-				classification = Classification.objects.get(number_id=key)
-				
-				image.classification_type.add(classification)
-
-
-			image.save()
-
+				classification = Classification.objects.get(number_id=key,percentage=value[1])
+				image.classification.add(classification)
+				image.save()
+		
 
 		faces.append(output)
 
