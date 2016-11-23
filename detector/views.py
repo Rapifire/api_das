@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import JsonResponse
@@ -5,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from ImageCategory import ImageClassifier
 from models import Image, Classification
+from NearestNeighbors import LoadData
 import numpy as np
 import urllib
 import json
@@ -13,19 +15,60 @@ import os
 
 # Create your views here.
 
+class FirstPage(View):
+
+	http_methods_names = [u'get',u'post']
+
+	def get(self,request):
+
+		return render(request,'firstpage.html')
+
+
+class GetCategories(View):
+
+	http_methods_names = [u'get']
+
+	def get(self,request):
+
+		categories = Classification.objects.all()
+		names = list()
+
+
+		for obj in categories:
+			names.append(obj.classification)
+
+		# print images
+		names = list(set(names))
+		
+
+		dicionario_retorno = dict()
+		for i in names:
+			dicionario_retorno[i] = Image.objects.filter(classification__classification__contains=i)
+
+
+		return render(request,'categories.html',{'dicionario_retorno':dicionario_retorno})
+
+
+
 class FaceDetect(View):
 
-	http_methods_names = [u'post']
+	http_methods_names = [u'get', u'post']
 
 	@method_decorator(csrf_exempt)
 	def dispatch(self, request, *args, **kwargs):
 		return super(FaceDetect, self).dispatch(request, *args, **kwargs)
+
+	def get(self, request):
+		
+		lista = Image.objects.all()
+		return render(request, 'form.html',{"images":lista})
 
 	def post(self,request):
 
 		output = dict()
 
 		url = request.POST["url"]
+		print url
 
 		faces = list()
 
@@ -79,9 +122,15 @@ class FaceDetect(View):
 				image.save()
 		
 
-		faces.append(output)
-
-
 		
+		data = LoadData.find_images(url)
+		faces.append(output)
+		
+		images = list()
 
-		return JsonResponse(output)
+		for key,value in data.iteritems():
+			i = Image.objects.get(id = key)
+			images.append((i,value))
+			
+		print images
+		return render(request,'return_similar.html',{"images":images})
