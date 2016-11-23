@@ -1,0 +1,19 @@
+{%  extends "base.html" %}
+{% block main_content %}
+<main>
+	<div class="container">
+		
+	<div class="row">
+		<h4></h4>
+	</div>
+
+
+		<div class="row m12 l10 center">
+			{% for object,value in images %}
+				<img class="materialboxed" width="650" src="{{object.url}}">
+				<!-- <a class="carousel-item" href="{{object.url}}"><img src="{{object.url}}"></a> -->
+			{% endfor %}
+		</div>
+	</div>
+</main>
+{% endblock main_content %}

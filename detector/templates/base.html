@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+{% load i18n %}
+    <head>
+        <!--Import materialize.css-->
+        {% load staticfiles %}
+        <link type="text/css" rel="stylesheet" href="{% static 'stylesheets/materialize.css' %}"  media="screen,projection"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <title>Classify it! | {% block title %}{% endblock %}</title>
+        {% include "cabecalho.html" %}
+
+    </head>
+
+    <body>
+      {% block main_content %} {% endblock main_content %}
+      <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/sideNav.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/bin/materialize.min.js' %}"></script>
+
+      <script>
+      $(document).ready(function() {
+      $('select').material_select();
+      });
+      $(document).ready(function(){
+          // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+          $('.modal-trigger').leanModal();
+        });
+       $(document).ready(function(){
+    $('.collapsible').collapsible({
+      accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    });
+  });
+         $(document).ready(function(){
+      $('.slider').slider({full_width: true});
+    });
+         $(document).ready(function(){
+    $('.materialboxed').materialbox();
+  });
+      $(document).ready(function(){
+      $('.carousel').carousel();
+    });
+      </script>
+
+    </body>
+    <footer>
+      {% include "rodape.html" %}
+    </footer>
+</html>

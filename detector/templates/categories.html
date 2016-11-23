@@ -1,0 +1,39 @@
+{%  extends "base.html" %}
+{% block main_content %} 
+
+<main>
+<div class="container">
+	<div class="row">
+	<div class="section">
+
+		<h4>Veja todas as tags!</h4>
+		<p>Essas são as tags que o Caffe ja analisou. Clique nas barras para ver as imagens relacionadas a tag desejada!</p>
+		
+	</div>
+		<div class="s12 m9 l10 ">
+			<ul class="collapsible" data-collapsible="accordion">
+		{% for key,value in dicionario_retorno.items %}
+				<li>
+			    	<div class="collapsible-header"><i class="material-icons">loyalty</i>{{key}}</div>
+      				<div class="collapsible-body">
+      				<ul>
+      				<div class="container">
+      					<div class="row">
+      					{% for image in value %}
+      						<div class="col s3"><img class="materialboxed" width="150" src="{{image.url}}"></div>
+      					{% endfor %}
+      					</div>
+      				</div>
+      				</ul>
+      				</div>
+				</li>
+
+		{% endfor %}
+			</ul>
+  		</div>
+	</div>
+</div>
+
+</main>
+
+{% endblock main_content %}
