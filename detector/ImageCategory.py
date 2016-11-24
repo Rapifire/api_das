@@ -17,11 +17,6 @@ sys.path.insert(0, os.path.join(caffe_root, 'python'))
 	
 import caffe
 
-# define the path to the face detector
-FACE_DETECTOR_PATH = "{base_path}/cascades/haarcascade_frontalface_default.xml".format(
-        base_path=os.path.abspath(os.path.dirname(__file__)))
-
-
 # plt.rcParams['figure.figsize'] = (10, 10)        # large images
 # plt.rcParams['image.interpolation'] = 'nearest'  # don't interpolate: show square pixels
 # plt.rcParams['image.cmap'] = 'gray'  # use grayscale output rather than a (potentially misleading) color heatmap

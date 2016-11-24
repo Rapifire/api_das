@@ -13,6 +13,9 @@ import json
 import cv2
 import os
 
+# define the path to the face detector
+FACE_DETECTOR_PATH = "{base_path}/cascades/haarcascade_frontalface_default.xml".format(
+        base_path=os.path.abspath(os.path.dirname(__file__)))
 
 # Create your views here.
 
