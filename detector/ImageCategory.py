@@ -8,11 +8,18 @@ import urllib
 
 
 #loading caffe 
-caffe_root = os.path.join('/home/sabings/glog/caffe/')	
-sys.path.insert(0,os.path.join('/home/sabings/glog/caffe/python'))
+home_dir = os.getenv("HOME")
+caffe_root = os.path.join(home_dir, 'caffe')
+sys.path.insert(0, os.path.join(caffe_root, 'python'))
+
+#caffe_root = os.path.join('/home/sabings/glog/caffe/')	
+#sys.path.insert(0,os.path.join('/home/sabings/glog/caffe/python'))
 	
 import caffe
-# set display defaults
+
+# define the path to the face detector
+FACE_DETECTOR_PATH = "{base_path}/cascades/haarcascade_frontalface_default.xml".format(
+        base_path=os.path.abspath(os.path.dirname(__file__)))
 
 
 # plt.rcParams['figure.figsize'] = (10, 10)        # large images
