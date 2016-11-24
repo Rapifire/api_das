@@ -132,5 +132,6 @@ class FaceDetect(View):
 			i = Image.objects.get(id = key)
 			images.append((i,value))
 			
+		images = sorted(images, key=lambda value:value[1])
 		print images
 		return render(request,'return_similar.html',{"images":images})
