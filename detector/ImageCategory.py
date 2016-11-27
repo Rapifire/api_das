@@ -8,12 +8,14 @@ import urllib
 
 
 #loading caffe 
-caffe_root = os.path.join('/home/sabings/glog/caffe/')	
-sys.path.insert(0,os.path.join('/home/sabings/glog/caffe/python'))
+home_dir = os.getenv("HOME")
+caffe_root = os.path.join(home_dir, 'caffe')
+sys.path.insert(0, os.path.join(caffe_root, 'python'))
+
+#caffe_root = os.path.join('/home/sabings/glog/caffe/')	
+#sys.path.insert(0,os.path.join('/home/sabings/glog/caffe/python'))
 	
 import caffe
-# set display defaults
-
 
 # plt.rcParams['figure.figsize'] = (10, 10)        # large images
 # plt.rcParams['image.interpolation'] = 'nearest'  # don't interpolate: show square pixels

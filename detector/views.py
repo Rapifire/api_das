@@ -13,6 +13,10 @@ import json
 import cv2
 import os
 
+# define the path to the face detector
+FACE_DETECTOR_PATH = "{base_path}/cascades/haarcascade_frontalface_default.xml".format(
+        base_path=os.path.abspath(os.path.dirname(__file__)))
+
 # Create your views here.
 
 class FirstPage(View):
@@ -78,7 +82,7 @@ class FaceDetect(View):
 		image = np.asarray(bytearray(data),dtype="uint8")
 		image = cv2.imdecode(image,cv2.IMREAD_COLOR)
 		image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-		detector = cv2.CascadeClassifier('/root/Opencv/data/haarcascades/haarcascade_frontalface_default.xml')
+		detector = cv2.CascadeClassifier(FACE_DETECTOR_PATH)
 
 
 		rects = detector.detectMultiScale(image, scaleFactor=1.1, minNeighbors=5,
