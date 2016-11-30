@@ -12,8 +12,21 @@ import urllib
 import json
 import cv2
 import os
+import random
 
 # Create your views here.
+
+class ViewTemplate(View):
+
+	http_methods_names = [u'get', u'post']
+
+	def get(self,request):
+		pass
+
+	def post(self,request):
+		pass
+
+
 
 class FirstPage(View):
 
@@ -50,17 +63,17 @@ class GetCategories(View):
 
 
 
+
 class FaceDetect(View):
 
-	http_methods_names = [u'get', u'post']
-
-	# @method_decorator(csrf_exempt)
-	# def dispatch(self, request, *args, **kwargs):
-	# 	return super(FaceDetect, self).dispatch(request, *args, **kwargs)
+	# http_methods_names = [u'get', u'post']
 
 	def get(self, request):
 		
 		lista = Image.objects.all()
+
+		lista = random.sample(lista,5)
+
 		return render(request, 'form.html',{"images":lista})
 
 	def post(self,request):
@@ -133,5 +146,6 @@ class FaceDetect(View):
 			images.append((i,value))
 			
 		images = sorted(images, key=lambda value:value[1])
+		print "-----------------Lista ~imagens~----------------------------"
 		print images
 		return render(request,'return_similar.html',{"images":images})

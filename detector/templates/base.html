@@ -5,6 +5,7 @@
         <!--Import materialize.css-->
         {% load staticfiles %}
         <link type="text/css" rel="stylesheet" href="{% static 'stylesheets/materialize.css' %}"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="{% static 'stylesheets/materialize.min.css' %}"  media="screen,projection"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <!--Let browser know website is optimized for mobile-->
@@ -16,10 +17,11 @@
     </head>
 
     <body>
-      {% block main_content %} {% endblock main_content %}
       <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/sideNav.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/bin/materialize.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
+      {% block main_content %} {% endblock main_content %}
 
       <script>
       $(document).ready(function() {

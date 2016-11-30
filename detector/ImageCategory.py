@@ -8,22 +8,11 @@ import urllib
 import requests
 from StringIO import StringIO
 
-
-
-
 #loading caffe 
 caffe_root = os.path.join('/home/sabings/glog/caffe/')	
 sys.path.insert(0,os.path.join('/home/sabings/glog/caffe/python'))
 	
 import caffe
-# set display defaults
-
-
-# plt.rcParams['figure.figsize'] = (10, 10)        # large images
-# plt.rcParams['image.interpolation'] = 'nearest'  # don't interpolate: show square pixels
-# plt.rcParams['image.cmap'] = 'gray'  # use grayscale output rather than a (potentially misleading) color heatmap
-
-
 
 class ImageClassifier():
 
@@ -87,3 +76,4 @@ class ImageClassifier():
 			output[temp[0]].append(str(probability))
 
 		return output
+

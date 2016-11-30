@@ -8,13 +8,52 @@
 	</div>
 
 
-		<div class="row m12 l10 center">
-		oi
-			{% for object,value in images %}
-				<img class="materialboxed" width="650" src="{{object.url}}">
-				<!-- <a class="carousel-item" href="{{object.url}}"><img src="{{object.url}}"></a> -->
-			{% endfor %}
+		{% for object,value in images %}
+		<div class="row m12 l10">
+			<!-- <a class="carousel-item" href="{{object.url}}"><img src="{{object.url}}"></a> -->
+			<div class="card horizontal col m12 valign-wrapper">
+			  <div class="card-image col m7 valign">
+			      	<img class="materialboxed responsive-img"  src="{{object.url}}">
+			  </div>
+			 <div class="card-stacked col m5">
+		        <div class="card-content">
+	         	{%for classification in object.classification.values|dictsortreversed:"percentage" %}
+	         	 {% if classification.percentage > 0.01 %}
+	         	   
+
+		          <div class='chip tooltipped lime lighten-1' data-position="bottom" data-delay="50" data-tooltip="{{classification.percentage}}">{{classification.classification}}</div>
+		          {% endif %}
+				 {% endfor %}
+		        </div>			        
+			 </div>
+			</div>
 		</div>
+			{% endfor %}
 	</div>
 </main>
+
+<script type="text/javascript">
+	  $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+  });
+       
+</script>
+
 {% endblock main_content %}
+
+<!--   <table>
+		          	<thead>
+		          		<th data-field="Classification">Classification</th>
+		          		<th data-field="Probability">Probability</th>
+		          	</thead>
+		          	<tbody>
+
+<tr>
+		          			<td>{{classification.classification}}</td>
+		          			<td>{{classification.percentage}}</td>
+		          		</tr>
+
+
+		          	</tbody>
+		          		          </table>
+		          	-->

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from detector.models import Image, Classification
 import numpy as np
+import scipy
 
 class LoadData:
 
@@ -41,7 +42,8 @@ class LoadData:
             for a in lista_classifications:
                 if(a[0] == i[1]):
                     distancia = 0
-                    distancia = np.abs(i[2]-a[1])
+                    # distancia = np.abs(i[2]-a[1])
+                    distancia = scipy.spatial.distance.euclidean(a[1],i[2])
                     lista_mais_provaveis.append((i[0],distancia))
 
 
@@ -56,6 +58,6 @@ class LoadData:
         for key, value in distancias.iteritems():
             distancias[key] = sum(value)
 
-
-        print distancias
+        print "------Distancias------"
+        print sorted(distancias.items(), key=lambda value:value[1])
         return distancias

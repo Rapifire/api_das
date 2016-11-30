@@ -1,29 +1,40 @@
 {%  extends "base.html" %}
 {% block main_content %}
 <main>
+	
 	<div class="row">
-		<div class="col m12">
-			<div class="row">
-    		 <form  action='/url/' method="POST">
-    		 	{% csrf_token %}
-		        <div class="row m12">
-		       	 <div class="input-field col s6">
-		          <input  id="url" name='url' type="text" class="validate" required="True">
-		          <label for="url">Url</label>
-		        </div>
-		        <div class="input-field col s6">
-		          <button class="waves-effect waves-light btn" type="submit">Classify it!</button>
-		          </div>
-		     </div>
-		     </form>	
+	
+		 <form  action='/url/' method="POST" >
+		 	{% csrf_token %}
+	       	 <div class="input-field col s6 m6 ">
+	          <input  id="url" name='url' type="text" class="validate" required="True">
+	          <label for="url">Url</label>
+	        </div>
+	        <div class="input-field">
+	          <button class="waves-effect waves-light btn" type="submit">Classify it!</button>
+	          </div>
+		</form>	
 		</div>
-	</div>
-	</div>
-	<!-- <div class="row m12"> -->
-		<!-- {% for object in images %} -->
-			<!-- <img class="materialboxed" width="650" src="{{object.url}}"> -->
-			<!-- <a class="carousel-item" href="{{object.url}}"><img src="{{object.url}}"></a> -->
-		<!-- {% endfor %} -->
-	<!-- </div> -->
+
+
+
+<div class="row">
+  <div class="carousel" >
+    {% for i in images %}
+   
+    <a class="carousel-item tooltipped" data-position="top" data-delay="50" data-tooltip="{{i.classification.values.0.classification}}"><img src="{{i.url}}"></a>
+   
+    {% endfor %}
+  </div>
+</div>
+
+<script type="text/javascript">
+	  $(document).ready(function(){
+      $('.carousel').carousel();
+    });
+
+
+</script>
+
 </main>
 {% endblock main_content %}

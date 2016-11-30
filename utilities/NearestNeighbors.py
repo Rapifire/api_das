@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from detector.models import Image, Classification
 import numpy as np
+import scipy
 
-class LoadData:
+class LoadData():
 
     @classmethod
     def find_images(cls,image_url):
@@ -41,13 +42,14 @@ class LoadData:
             for a in lista_classifications:
                 if(a[0] == i[1]):
                     distancia = 0
-                    distancia = np.abs(i[2]-a[1])
+                    distancia = scipy.spatial.distance.euclidean(i[2],a[1])
                     lista_mais_provaveis.append((i[0],distancia))
 
 
 
         lista_mais_provaveis = sorted(lista_mais_provaveis,key=lambda similarity:similarity[1])
         
+        print "-----------------Lista mais provaveis----------------------------"
         print lista_mais_provaveis
 
         distancias = dict()
@@ -60,6 +62,8 @@ class LoadData:
         #Faz a soma das possibilidades
         for key, value in distancias.iteritems():
             distancias[key] = sum(value)
+            print "sabino"
             print distancias[key]
+
 
         return distancias
