@@ -5,6 +5,10 @@ import os
 import sys
 import numpy as np
 import urllib
+import requests
+from StringIO import StringIO
+
+
 
 
 #loading caffe 
@@ -50,9 +54,10 @@ class ImageClassifier():
 		                          3,         # 3-channel (BGR) images
 		                          227, 227)  # image size is 227x227
 		
-		resp = urllib.urlopen(url)
+		resp = requests.get(url)
 
-		image_caffe = caffe.io.load_image(url)
+		image_caffe = caffe.io.load_image(StringIO(resp.content))
+
 		transformed_image = transformer.preprocess('data', image_caffe)
 
 		# copy the image data into the memory allocated for the net
