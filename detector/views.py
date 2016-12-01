@@ -4,9 +4,9 @@ from django.views.generic import View
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from ImageCategory import ImageClassifier
 from models import Image, Classification
-from NearestNeighbors import LoadData
+from utilities.ImageCategory import ImageClassifier
+from utilities.NearestNeighbors import LoadData
 import numpy as np
 import urllib
 import json
@@ -104,35 +104,36 @@ class FaceDetect(View):
 		# output['faces'] = rects
 		# output['sucess'] = True
 		 
-		output['probability_response'] = ImageClassifier.image_from_url(url)
-		
-		
-		for key,value in output['probability_response'].items():
-			if(len(Classification.objects.filter(number_id=key,percentage=value[1])) == 0):
-				classification = Classification()
-				
-				classification.number_id = key
-				classification.classification = value[0]
-				classification.percentage = value[1]
-
-				classification.save()
-
-				print key,value
-			else:
-				pass
-
-
-		if( len(Image.objects.filter(url=url)) == 0 ):
-
-			image = Image()
-			image.url = request.POST['url']
-			image.save()
-
+		if (len(Image.objects.filter(url=url)) == 0) :
+			output['probability_response'] = ImageClassifier.image_from_url(url)
+			
+			
 			for key,value in output['probability_response'].items():
-				
-				classification = Classification.objects.get(number_id=key,percentage=value[1])
-				image.classification.add(classification)
+				if(len(Classification.objects.filter(number_id=key,percentage=value[1])) == 0):
+					classification = Classification()
+					
+					classification.number_id = key
+					classification.classification = value[0]
+					classification.percentage = value[1]
+
+					classification.save()
+
+					print key,value
+				else:
+					pass
+
+
+			if( len(Image.objects.filter(url=url)) == 0 ):
+
+				image = Image()
+				image.url = request.POST['url']
 				image.save()
+
+				for key,value in output['probability_response'].items():
+					
+					classification = Classification.objects.get(number_id=key,percentage=value[1])
+					image.classification.add(classification)
+					image.save()
 		
 
 		
@@ -146,6 +147,6 @@ class FaceDetect(View):
 			images.append((i,value))
 			
 		images = sorted(images, key=lambda value:value[1])
-		print "-----------------Lista ~imagens~----------------------------"
-		print images
+		# print "-----------------Lista ~imagens~----------------------------"
+		# print images
 		return render(request,'return_similar.html',{"images":images})

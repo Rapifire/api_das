@@ -16,6 +16,7 @@ class LoadData():
             lista_classifications.append(i['classification'])
 
 
+        
         #possiveis imagens (
         # Query de todas as imagens que possuem alguma classificacao igual a imagem upada)
         p_images = Image.objects.filter(
@@ -35,6 +36,24 @@ class LoadData():
                 image_list.append((image.id,value['classification'],value['percentage']))
 
 
+
+
+        print "--------TIRA TEIMA--------------"
+        print image_list
+        print len(image_list)
+        print "--------------------------------"
+        image_list = list(set(image_list))
+        print "--------TIRA TEIMA2--------------"
+        print image_list
+        print len(image_list)
+        print "--------------------------------"
+        print "--------TIRA TEIMA3 - lista_classifications--------------"
+        print lista_classifications
+        print len(image_list)
+        print "--------------------------------"
+
+        # print p_images
+
         lista_mais_provaveis = list()
         similaridade = 0
 
@@ -42,19 +61,15 @@ class LoadData():
             for a in lista_classifications:
                 if(a[0] == i[1]):
                     distancia = 0
-                    distancia = scipy.spatial.distance.euclidean(i[2],a[1])
+                    # distancia = np.abs(i[2]-a[1])
+                    # distancia = scipy.spatial.distance.euclidean(i[2],a[1])
+                    distancia = np.linalg.norm(i[2]-a[1])
                     lista_mais_provaveis.append((i[0],distancia))
 
 
-
-        lista_mais_provaveis = sorted(lista_mais_provaveis,key=lambda similarity:similarity[1])
-        
-        print "-----------------Lista mais provaveis----------------------------"
-        print lista_mais_provaveis
-
         distancias = dict()
         #Transforma a lista de tuplas em um dicionario onde 
-        # a key eh o id do ImageObject e o value e uma lista das possibilidades
+        # a key e o id do ImageObject e o value e uma lista das possibilidades
         for key, value in lista_mais_provaveis:
             distancias.setdefault(key,[]).append(value)
 
@@ -62,8 +77,11 @@ class LoadData():
         #Faz a soma das possibilidades
         for key, value in distancias.iteritems():
             distancias[key] = sum(value)
-            print "sabino"
-            print distancias[key]
 
 
+        # print "----- list classification ----------"
+        # print lista_classifications
+
+        print "------Distancias------"
+        print sorted(distancias.items(), key=lambda value:value[1])
         return distancias

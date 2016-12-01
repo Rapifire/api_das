@@ -10,12 +10,13 @@ class Classification(models.Model):
 	classification = models.CharField(max_length=50)
 	percentage = models.FloatField(null=True)
 
+	def __str__(self):
+		return self.classification, self.percentage
+
 class Image(models.Model):
 
 	url = models.URLField(max_length=200)
 	classification = models.ManyToManyField(Classification,blank=True)
 
-
-
-
-
+	def __str__(self):
+		return self.url, self.classification.values()

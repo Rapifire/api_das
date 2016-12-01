@@ -7,6 +7,7 @@ import numpy as np
 import urllib
 import requests
 from StringIO import StringIO
+from detector.ImagesUtil import ImageUtil
 
 #loading caffe 
 caffe_root = os.path.join('/home/sabings/glog/caffe/')	
@@ -14,7 +15,8 @@ sys.path.insert(0,os.path.join('/home/sabings/glog/caffe/python'))
 	
 import caffe
 
-class ImageClassifier():
+class ImageClassifier(ImageUtil):
+
 
 	@classmethod
 	def image_from_url(cls,url):
@@ -42,7 +44,7 @@ class ImageClassifier():
 		net.blobs['data'].reshape(50,        # batch size
 		                          3,         # 3-channel (BGR) images
 		                          227, 227)  # image size is 227x227
-		
+
 		resp = requests.get(url)
 
 		image_caffe = caffe.io.load_image(StringIO(resp.content))
@@ -64,7 +66,7 @@ class ImageClassifier():
 
 		probability_response = zip(labels[output_prob.argsort()[::-1][:5]])
 
-		top_inds = output_prob.argsort()[::-1][:15]
+		top_inds = output_prob.argsort()[::-1][:5]
 
 		lista = zip(output_prob[top_inds], labels[top_inds])
 	
@@ -76,4 +78,8 @@ class ImageClassifier():
 			output[temp[0]].append(str(probability))
 
 		return output
+
+	@classmethod
+	def image_from_file(cls,file):
+		pass
 

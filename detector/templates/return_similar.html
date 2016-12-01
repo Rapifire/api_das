@@ -17,12 +17,10 @@
 			  </div>
 			 <div class="card-stacked col m5">
 		        <div class="card-content">
-	         	{%for classification in object.classification.values|dictsortreversed:"percentage" %}
-	         	 {% if classification.percentage > 0.01 %}
-	         	   
+	         	{%for classification in object.classification.values|dictsortreversed:"percentage" %}	         	   
 
 		          <div class='chip tooltipped lime lighten-1' data-position="bottom" data-delay="50" data-tooltip="{{classification.percentage}}">{{classification.classification}}</div>
-		          {% endif %}
+		      
 				 {% endfor %}
 		        </div>			        
 			 </div>
