@@ -1,0 +1,32 @@
+{%  extends "base.html" %}
+{% block main_content %}
+
+<main>
+<div class="col s12 m12">
+
+<div id='test1' class="container">
+		<div class="section">
+		<div class="row center">
+		<h1 class="header center">Bem vindo ao Classify it!</h1>
+
+		<h4 class="header center">Classify it! é uma aplicação web que te retorna imagens "Parecidas" (nem tanto) com a que vc mandou utilizando o Caffe e um Algoritimo louco e talvez não eficiente feito por nós para comparar as imagens</h4>
+
+		<label class="right">*Comparações absurdas são de responsabilidade do Caffe.</label>
+		</div>
+
+		
+		<div class="row center">
+			<a class="btn-large waves-effect waves-light center" href="/url/">Envie-nos algo!</a>
+		</div>
+		</div>
+	</div>
+
+</main>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('ul.tabs').tabs();
+  });
+</script>
+
+{% endblock main_content %}
